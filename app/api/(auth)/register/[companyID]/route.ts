@@ -51,8 +51,50 @@ export const POST = async (req: NextRequest, { params }: any) => {
           status: 404,
         });
       }
-    } else if (companyDetail.plan === "starter") {
+    } else if (companyDetail.plan === "Starter") {
+      if (companyDetail.staff.length < 10) {
+        const staff = await staffData.create({
+          role: "staff",
+          email,
+          password: hashed,
+          staffName,
+        });
+
+        const myCompany = await companyDetail.staff.push(
+          new Types.ObjectId(staff._id)
+        );
+        companyDetail.save();
+
+        return NextResponse.json({
+          message: "company staff created",
+          data: { myCompany, staff },
+          status: 201,
+        });
+      } else {
+        return NextResponse.json({
+          message: "Upgrade your plan for more staff",
+
+          status: 404,
+        });
+      }
     } else {
+      const staff = await staffData.create({
+        role: "staff",
+        email,
+        password: hashed,
+        staffName,
+      });
+
+      const myCompany = await companyDetail.staff.push(
+        new Types.ObjectId(staff._id)
+      );
+      companyDetail.save();
+
+      return NextResponse.json({
+        message: "company staff created",
+        data: { myCompany, staff },
+        status: 201,
+      });
     }
   } catch (error: any) {
     return NextResponse.json({

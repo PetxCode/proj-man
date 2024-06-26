@@ -1,36 +1,10 @@
 import Button from "@/app/components/Button";
+import { data } from "@/utils/data";
 import Link from "next/link";
 import React from "react";
 import { MdBeachAccess, MdStadium, MdStars } from "react-icons/md";
 
 const page = () => {
-  const data = [
-    {
-      id: 1,
-      name: "Freemium",
-      price: "Free",
-      prof: "3 Staffs",
-      benefits: ["VS Code", "NextJS", "Javascript"],
-      URL: "/register/freemium",
-    },
-    {
-      id: 2,
-      name: "Starter",
-      price: "500",
-      prof: "10 Staffs",
-      benefits: ["All Freemium", "VS Code", "NextJS", "Javascript"],
-      URL: "/register/starter",
-    },
-    {
-      id: 3,
-      name: "Premium",
-      price: "1000",
-      prof: "Unlimited",
-      benefits: ["All Starter", "VS Code", "NextJS", "Javascript"],
-      URL: "/register/premium",
-    },
-  ];
-
   return (
     <div className="flex justify-center w-full items-center h-screen">
       <div className="flex gap-5">

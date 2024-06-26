@@ -1,4 +1,5 @@
-// import { API_LOCAL } from "@/utils/constant";
+import { URL } from "@/utils/constant";
+import { data } from "@/utils/data";
 import Link from "next/link";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
@@ -6,25 +7,46 @@ import { FaGoogle } from "react-icons/fa6";
 
 const page = async ({ params }: any) => {
   const { reg } = params;
+  const readData = data;
+
+  const plan = reg.toString().charAt(0).toUpperCase().concat(reg.substring(1));
+
+  console.log(plan);
+  console.log(
+    "data: ",
+    readData.filter((el) => {
+      return el.name !== plan;
+    })
+  );
+
+  let cost: any = readData.find((el) => {
+    return el.name === plan;
+  });
 
   const createAccount = async (data: FormData) => {
     "use server";
-    const name = data.get("name") as string;
+    const companyName = data.get("companyName") as string;
     const email = data.get("email") as string;
     const password = data.get("password") as string;
 
-    await fetch(`${"API_LOCAL"}/api/register`, {
+    await fetch(`${URL}/api/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({
+        companyName,
+        email,
+        password,
+        plan,
+        planCost: cost?.price === "Free" ? 0 : parseInt(cost?.price),
+      }),
     });
   };
   return (
     <div className="flex w-full h-screen justify-center items-center">
       <div className="border rounded-md w-[500px] min-h-[300px] p-4 ">
-        <div>Register Screen</div>
+        <div>Register Screen for {plan}</div>
 
         <div className="my-10">
           <hr />
@@ -32,10 +54,10 @@ const page = async ({ params }: any) => {
 
         <form action={createAccount}>
           <div className="flex flex-col mb-4">
-            <label className="font-semibold text-[12px]">Display Name</label>
+            <label className="font-semibold text-[12px]">Company Name</label>
             <input
               type="text"
-              name="name"
+              name="companyName"
               placeholder="Display Name"
               className="border outline-none h-[45px] rounded-md pl-2"
             />
