@@ -4,7 +4,9 @@ import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 
-const page = async () => {
+const page = async ({ params }: any) => {
+  const { reg } = params;
+
   const createAccount = async (data: FormData) => {
     "use server";
     const name = data.get("name") as string;
