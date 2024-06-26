@@ -3,7 +3,7 @@ import { iStaffData } from "../interface";
 
 const staffModel = new Schema<iStaffData>(
   {
-    companyName: {
+    staffName: {
       type: String,
     },
     email: {

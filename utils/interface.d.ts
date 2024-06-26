@@ -16,7 +16,7 @@ export interface iCompany {
 export interface iCompanyData extends iCompany, Document {}
 
 export interface iStaff {
-  companyName: string;
+  staffName: string;
   email: string;
   role: string;
   avatar: string;
