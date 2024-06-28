@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { NextFont } from "next/dist/compiled/@next/font";
 import { dbConfig } from "@/utils/dbConfig";
+import MainSession from "./components/MainSession";
 
 const inter: NextFont = Inter({ subsets: ["latin"] });
 const poppins: NextFont = Poppins({
@@ -24,7 +25,11 @@ export default async function RootLayout({
   await dbConfig();
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <div className={poppins.className}>
+          <MainSession>{children}</MainSession>
+        </div>
+      </body>
     </html>
   );
 }

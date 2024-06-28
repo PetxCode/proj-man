@@ -51,7 +51,7 @@ const ScrollScreen = () => {
       prof: "Motion Artist",
       tools: ["VS Code", "NextJS", "Javascript"],
       image:
-        "https://cdn.dribbble.com/uploads/47179/original/35d07cfebd303e05e688078015da0cc2.mp4?1685645373",
+        "https://res.cloudinary.com/duewdl1ua/video/upload/v1719569086/v_zl4iic.mov",
     },
     {
       id: 2,
@@ -59,7 +59,7 @@ const ScrollScreen = () => {
       prof: "Cloud Engineer",
       tools: ["VS Code", "NextJS", "Javascript"],
       image:
-        "https://cdn.dribbble.com/uploads/47181/original/1e3a73a174484bef522b620c401cd00a.mp4?1685645427",
+        "https://res.cloudinary.com/duewdl1ua/video/upload/v1719569081/v2_xodzk1.mov",
     },
     {
       id: 3,
@@ -67,7 +67,7 @@ const ScrollScreen = () => {
       prof: "UI/UX Artist",
       tools: ["VS Code", "NextJS", "Javascript"],
       image:
-        "https://cdn.dribbble.com/uploads/47180/original/1def7b9fb30832c4af4353b325d9c3af.mp4?1685645402",
+        "https://res.cloudinary.com/duewdl1ua/video/upload/v1719569074/v1_mqff3f.mov",
     },
     {
       id: 4,
@@ -75,7 +75,7 @@ const ScrollScreen = () => {
       prof: "Back End Engineer",
       tools: ["VS Code", "NextJS", "Javascript"],
       image:
-        "https://cdn.dribbble.com/uploads/47180/original/1def7b9fb30832c4af4353b325d9c3af.mp4?1685645402",
+        "https://res.cloudinary.com/duewdl1ua/video/upload/v1719569074/v3_cu4xoy.mov",
     },
     {
       id: 5,
@@ -83,7 +83,7 @@ const ScrollScreen = () => {
       prof: "Front End Engineer",
       tools: ["VS Code", "NextJS", "Javascript"],
       image:
-        "https://cdn.dribbble.com/uploads/47180/original/1def7b9fb30832c4af4353b325d9c3af.mp4?1685645402",
+        "https://res.cloudinary.com/duewdl1ua/video/upload/v1719569098/vid2_tzxzts.mp4",
     },
   ];
 
@@ -101,6 +101,7 @@ const ScrollScreen = () => {
                   src={props?.image}
                   className="w-full h-full bg-slate-200 object-cover"
                 />
+
                 <div className="absolute w-full h-full top-0 opacity-90 bg-gradient-to-b from-transparent from-60% to-black " />
                 <div className=" text-white absolute bottom-0 p-4 ">
                   <p className="text-[18px] font-bold uppercase">

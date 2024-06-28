@@ -3,6 +3,7 @@ import LandingPageHeader from "./LandingPageHeader";
 import { Poppins } from "next/font/google";
 import { NextFont } from "next/dist/compiled/@next/font";
 import ScrollScreen from "./ScrollScreen";
+import MainDesign from "./MainDesign";
 
 const poppins: NextFont = Poppins({
   weight: "300",
@@ -16,7 +17,10 @@ const LandingPage = () => {
       <div>
         <LandingPageHeader />
         <div className="mt-20" />
-        <div>LandingPage</div>
+
+        <div>
+          <MainDesign />
+        </div>
 
         <ScrollScreen />
       </div>

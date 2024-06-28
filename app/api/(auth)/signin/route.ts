@@ -35,6 +35,9 @@ export const POST = async (req: NextRequest) => {
       }
     } else if (staff) {
       const checkStaff = await bcrypt.compare(password, staff.password);
+
+      console.log(checkStaff);
+
       if (checkStaff) {
         return NextResponse.json({
           message: "staff sign in",
@@ -43,7 +46,7 @@ export const POST = async (req: NextRequest) => {
         });
       } else {
         return NextResponse.json({
-          message: "Error with Email",
+          message: "Error with Password",
           status: 404,
         });
       }
