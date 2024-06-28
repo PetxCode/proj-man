@@ -4,6 +4,7 @@ import { Inter, Poppins } from "next/font/google";
 import { NextFont } from "next/dist/compiled/@next/font";
 import { dbConfig } from "@/utils/dbConfig";
 import Sider from "./Sider";
+import CreateProject from "./CreateProject";
 
 const poppins: NextFont = Poppins({
   weight: "300",
