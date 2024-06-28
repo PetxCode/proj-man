@@ -7,7 +7,11 @@ const projectModel = new Schema<iProjectData>(
       type: String,
     },
     dueDate: {
-      type: Date,
+      type: String,
+    },
+
+    companyID: {
+      type: String,
     },
 
     task: [
@@ -26,6 +30,6 @@ const projectModel = new Schema<iProjectData>(
 );
 
 const projectData =
-  models.Companies || model<iProjectData>("Companies", projectModel);
+  models.Projects || model<iProjectData>("Projects", projectModel);
 
 export default projectData;

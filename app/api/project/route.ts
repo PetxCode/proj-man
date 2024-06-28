@@ -8,7 +8,7 @@ export const GET = async () => {
     await dbConfig();
     const company = await companyData.find();
     return NextResponse.json({
-      message: "Getting companies",
+      message: "Getting company's project",
       data: company,
       status: 201,
     });
