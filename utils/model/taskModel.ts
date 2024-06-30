@@ -6,12 +6,15 @@ const taskModel = new Schema<iTaskData>(
     title: {
       type: String,
     },
-
     assigned: {
       type: String,
     },
 
-    steps: [
+    companyID: {
+      type: String,
+    },
+
+    step: [
       {
         type: Types.ObjectId,
         ref: "Steps",
@@ -26,6 +29,6 @@ const taskModel = new Schema<iTaskData>(
   { timestamps: true }
 );
 
-const taskData = models.Tasks || model<iTaskData>("Tasks", taskModel);
+const taskData = models.tasks || model<iTaskData>("tasks", taskModel);
 
 export default taskData;

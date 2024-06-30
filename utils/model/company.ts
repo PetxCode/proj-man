@@ -31,20 +31,24 @@ const companyModel = new Schema<iCompanyData>(
     staff: [
       {
         type: Types.ObjectId,
-        ref: "Staffs",
+        ref: "staffs",
       },
     ],
     projects: [
       {
         type: Types.ObjectId,
-        ref: "Projects",
+        ref: "projects",
       },
     ],
+    task: {
+      type: Types.ObjectId,
+      ref: "tasks",
+    },
   },
   { timestamps: true }
 );
 
 const companyData =
-  models.Companies || model<iCompanyData>("Companies", companyModel);
+  models.companies || model<iCompanyData>("companies", companyModel);
 
 export default companyData;

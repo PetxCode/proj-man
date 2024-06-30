@@ -10,6 +10,7 @@ export interface iCompany {
   planCost: number;
   address: string;
   staff: {}[];
+  task: {};
   projects: {}[];
 }
 
@@ -39,18 +40,11 @@ export interface iProject {
 export interface iProjectData extends iProject, Document {}
 
 export interface iTask {
-  assigned: string;
   title: string;
-  steps: {}[];
-  task: {};
+  assigned: String;
+  companyID: String;
+  step: {}[];
   project: {};
 }
 
 export interface iTaskData extends iTask, Document {}
-
-export interface iStep {
-  title: string;
-  task: {};
-}
-
-export interface iStepData extends iStep, Document {}

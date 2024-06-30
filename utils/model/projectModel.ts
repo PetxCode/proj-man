@@ -17,19 +17,19 @@ const projectModel = new Schema<iProjectData>(
     task: [
       {
         type: Types.ObjectId,
-        ref: "Tasks",
+        ref: "tasks",
       },
     ],
 
     company: {
       type: Types.ObjectId,
-      ref: "Companies",
+      ref: "companies",
     },
   },
   { timestamps: true }
 );
 
 const projectData =
-  models.Projects || model<iProjectData>("Projects", projectModel);
+  models.projects || model<iProjectData>("projects", projectModel);
 
 export default projectData;

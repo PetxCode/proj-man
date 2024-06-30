@@ -39,6 +39,7 @@ export const POST = async (req: NextRequest, { params }: any) => {
     const { title, dueDate } = await req.json();
 
     const company = await companyData.findById(companyID);
+
     if (company) {
       const project = await projectData.create({
         title,
@@ -48,9 +49,10 @@ export const POST = async (req: NextRequest, { params }: any) => {
 
       await company.projects.push(new Types.ObjectId(project._id));
       company.save();
+
       return NextResponse.json({
         message: "company's project created",
-        data: project,
+        data: { company, project },
         status: 201,
       });
     } else {
