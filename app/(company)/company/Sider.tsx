@@ -11,6 +11,8 @@ import CreateProject from "./CreateProject";
 import pix from "@/public/assets/Buky.jpeg";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import LoadProject from "./LoadProject";
+import Link from "next/link";
 
 const Sider = () => {
   const bullet = [
@@ -45,11 +47,12 @@ const Sider = () => {
   const [state, setState] = useState<any>({});
 
   const fetchData = async () => {
-    await fetch(`/api/register/${session.data?.user.id}`)
+    return await fetch(`/api/register/667c2ca154e4e69facc7a170`)
       .then((res) => {
         return res.json();
       })
       .then((result: any) => {
+        console.log("result: ", result);
         setState(result.data);
       });
   };
@@ -57,8 +60,6 @@ const Sider = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  console.log(state);
 
   return (
     <div className="relative">
@@ -79,19 +80,22 @@ const Sider = () => {
           )}
           <div>
             <p className="text-[14px] font-semibold ">{state?.companyName}</p>
-            <p className="text-[12px]">No of Staff: {state.staff.length}</p>
+            <p className="text-[12px]">No of Staff: {state?.staff?.length}</p>
             <p className="text-[12px] mt-3">
-              Project Plan: <span className="font-bold ">{state.plan}</span>
+              Project Plan: <span className="font-bold ">{state?.plan}</span>
             </p>
           </div>
         </div>
         <div className="mt-5 flex flex-col gap-4">
           {bullet?.map((el) => {
             return (
-              <div className="hover:border border-slate-50 border hover:text-white hover:bg-blue-950 cursor-pointer rounded-md px-2 py-4 duration-300 transition-all capitalize text-[15px] font-semibold flex items-center gap-2">
+              <Link
+                href={el?.url}
+                className="hover:border border-slate-50 border hover:text-white hover:bg-blue-950 cursor-pointer rounded-md px-2 py-4 duration-300 transition-all capitalize text-[15px] font-semibold flex items-center gap-2"
+              >
                 <p className="text-[18px]">{el.icon}</p>
                 {el.name}
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -115,7 +119,9 @@ const Sider = () => {
         <div className="my-5">
           <hr />
         </div>
-        <div>projects</div>
+        <div>
+          <LoadProject session={session} />
+        </div>
         <div className="flex-1" />
         <div>settings</div>
       </div>

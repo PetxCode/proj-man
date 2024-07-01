@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface iTog {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,12 +34,12 @@ const CreateProject: FC<iTog> = ({ setToggle }) => {
       body: JSON.stringify({ title, dueDate: date }),
     }).then(() => {
       setToggle(false);
+      redirect("/company/inbox");
     });
 
-    // route.push("/inbox");
+    revalidateTag("project");
   };
 
-  // revalidateTag("project");
   return (
     <div
       className="w-[100vw] backdrop-blur-sm h-screen flex items-center justify-center flex-col"
