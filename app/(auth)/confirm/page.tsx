@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -6,20 +6,27 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
+import { verifyPayment } from "../register/[reg]/action";
 
-const page = () => {
+const page = async () => {
   // to9k0wstx6
 
-  const getURL = useSearchParams();
+  //   const getURL = useSearchParams();
 
-  const dataValue = getURL.get("reference");
+  //   const dataValue = getURL.get("reference");
 
-  console.log(dataValue);
+  //   console.log(dataValue);
+
+  await verifyPayment("to9k0wstx6").then((res: any) => {
+    console.log(res);
+  });
 
   const signInUser = (data: FormData) => {
+    "use server";
     const email = data.get("email");
     const password = data.get("password");
   };
+
   return (
     <div className="flex w-full h-screen justify-center items-center">
       <div className="border rounded-md w-[500px] min-h-[300px] p-4 ">

@@ -26,3 +26,22 @@ export const makePayment = async (email: string, cost: number) => {
     console.log(error);
   }
 };
+
+export const verifyPayment = async (reference: string) => {
+  try {
+    const url: string = `https://api.paystack.co/transaction/verify/${reference}`;
+
+    return await axios.get(
+      url,
+
+      {
+        headers: {
+          Authorization: `Bearer ${PAYSTACK}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
