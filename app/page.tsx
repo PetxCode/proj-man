@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 const page = async () => {
   const session: null | {} | undefined | any = await getServerSession(options);
 
-  console.log(session);
+  console.log("show me: ", session);
 
   if (session === null) {
     return (

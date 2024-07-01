@@ -7,10 +7,17 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useSession } from "next-auth/react";
+import { revalidateTag } from "next/cache";
+import { useRouter } from "next/navigation";
+
 interface iTog {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const CreateProject: FC<iTog> = ({ setToggle }) => {
+  const session: any = useSession();
+  const route = useRouter();
+
   const [startDate, setStartDate] = useState<Date>(new Date());
 
   const mainAction = async (formData: FormData) => {
@@ -18,8 +25,21 @@ const CreateProject: FC<iTog> = ({ setToggle }) => {
     const date = startDate;
 
     console.log(title, date);
+
+    await fetch(`/api/project/${session?.data?.user?.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, dueDate: date }),
+    }).then(() => {
+      setToggle(false);
+    });
+
+    // route.push("/inbox");
   };
 
+  // revalidateTag("project");
   return (
     <div
       className="w-[100vw] backdrop-blur-sm h-screen flex items-center justify-center flex-col"

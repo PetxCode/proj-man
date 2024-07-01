@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MdCheckBox,
   MdCreateNewFolder,
@@ -10,6 +10,8 @@ import {
 import CreateProject from "./CreateProject";
 import pix from "@/public/assets/Buky.jpeg";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+
 const Sider = () => {
   const bullet = [
     {
@@ -37,10 +39,26 @@ const Sider = () => {
       icon: <MdCheckBox />,
     },
   ];
-
+  const session: any = useSession();
   const [toggle, setToggle] = useState<boolean>(false);
 
-  console.log("readuign: ", toggle);
+  const [state, setState] = useState<any>({});
+
+  const fetchData = async () => {
+    await fetch(`/api/register/${session.data?.user.id}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((result: any) => {
+        setState(result.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(state);
 
   return (
     <div className="relative">
@@ -49,7 +67,7 @@ const Sider = () => {
           {pix ? (
             <Image
               src={pix}
-              alt=""
+              alt="Pix"
               width={1000}
               height={1000}
               className="w-16 h-16 border-blue-950 border-2 rounded-full bg-slate-100 object-cover"
@@ -60,10 +78,10 @@ const Sider = () => {
             </div>
           )}
           <div>
-            <p className="text-[14px] font-semibold ">Name</p>
-            <p className="text-[12px]">No of Staff: 3</p>
+            <p className="text-[14px] font-semibold ">{state?.companyName}</p>
+            <p className="text-[12px]">No of Staff: {state.staff.length}</p>
             <p className="text-[12px] mt-3">
-              Project Plan: <span className="font-bold ">Freemium</span>
+              Project Plan: <span className="font-bold ">{state.plan}</span>
             </p>
           </div>
         </div>
