@@ -1,26 +1,40 @@
-import { URL } from "@/utils/constant";
+// "use client";
 import { data } from "@/utils/data";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
+import { makePayment } from "./action";
+import { redirect } from "next/navigation";
+import { ContextProvider } from "@/app/global/GlobalContext";
 
 const page = async ({ params }: any) => {
+  // const {
+  //   setStaffToggle,
+  //   planCost,
+  //   setPlanCost,
+  //   companyName,
+  //   setCompanyName,
+  //   plan,
+  //   setPlan,
+  //   password,
+  //   setPassword,
+  //   email,
+  //   setEmail,
+  //   reference,
+  //   setReference,
+  // }: any = useContext(ContextProvider);
   const { reg } = params;
   const readData = data;
 
-  const plan = reg.toString().charAt(0).toUpperCase().concat(reg.substring(1));
-
-  console.log(plan);
-  console.log(
-    "data: ",
-    readData.filter((el) => {
-      return el.name !== plan;
-    })
-  );
+  const planValue = reg
+    .toString()
+    .charAt(0)
+    .toUpperCase()
+    .concat(reg.substring(1));
 
   let cost: any = readData.find((el) => {
-    return el.name === plan;
+    return el.name === planValue;
   });
 
   const createAccount = async (data: FormData) => {
@@ -29,24 +43,31 @@ const page = async ({ params }: any) => {
     const email = data.get("email") as string;
     const password = data.get("password") as string;
 
-    await fetch(`${URL}/api/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        companyName,
-        email,
-        password,
-        plan,
-        planCost: cost?.price === "Free" ? 0 : parseInt(cost?.price),
-      }),
+    await makePayment(email, cost?.price).then((res: any) => {
+      console.log(res);
+
+      redirect(res?.data?.data?.authorization_url);
     });
+
+    // await fetch(`${URL}/api/register`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     companyName,
+    //     email,
+    //     password,
+    //     plan,
+    //     planCost: cost?.price === "Free" ? 0 : parseInt(cost?.price),
+    //   }),
+    // });
   };
+
   return (
     <div className="flex w-full h-screen justify-center items-center">
       <div className="border rounded-md w-[500px] min-h-[300px] p-4 ">
-        <div>Register Screen for {plan}</div>
+        <div>Register Screen for {planValue}</div>
 
         <div className="my-10">
           <hr />
