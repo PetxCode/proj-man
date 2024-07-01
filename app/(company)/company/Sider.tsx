@@ -8,7 +8,8 @@ import {
   MdToday,
 } from "react-icons/md";
 import CreateProject from "./CreateProject";
-
+import pix from "@/public/assets/Buky.jpeg";
+import Image from "next/image";
 const Sider = () => {
   const bullet = [
     {
@@ -43,11 +44,13 @@ const Sider = () => {
   return (
     <div className="relative">
       <div className="w-[250px] flex flex-col border-r h-screen bg-slate-50 px-4 pt-10">
-        <div className="mb-10 flex gap-3">
-          <img
-            src=""
+        <div className="mb-10 flex gap-3 ">
+          <Image
+            src={pix}
             alt=""
-            className="w-16 h-16 border rounded-full bg-slate-100 object-cover"
+            width={1000}
+            height={1000}
+            className="w-16 h-16 border-blue-950 border-2 rounded-full bg-slate-100 object-cover"
           />
           <div>
             <p className="text-[14px] font-semibold ">Name</p>

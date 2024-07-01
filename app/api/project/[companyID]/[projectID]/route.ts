@@ -1,5 +1,4 @@
 import { dbConfig } from "@/utils/dbConfig";
-import companyData from "@/utils/model/company";
 import { NextRequest, NextResponse } from "next/server";
 import projectData from "@/utils/model/projectModel";
 import { Types } from "mongoose";
