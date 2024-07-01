@@ -24,7 +24,7 @@ const staffModel = new Schema<iStaffData>(
     },
     company: {
       type: Types.ObjectId,
-      ref: "Companies",
+      ref: "companies",
     },
 
     steps: [
@@ -37,6 +37,6 @@ const staffModel = new Schema<iStaffData>(
   { timestamps: true }
 );
 
-const staffData = models.Staffs || model<iStaffData>("Staffs", staffModel);
+const staffData = models.staffs || model<iStaffData>("staffs", staffModel);
 
 export default staffData;

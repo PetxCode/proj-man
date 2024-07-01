@@ -41,17 +41,24 @@ const Sider = () => {
   const [toggle, setToggle] = useState<boolean>(false);
 
   console.log("readuign: ", toggle);
+
   return (
     <div className="relative">
       <div className="w-[250px] flex flex-col border-r h-screen bg-slate-50 px-4 pt-10">
         <div className="mb-10 flex gap-3 ">
-          <Image
-            src={pix}
-            alt=""
-            width={1000}
-            height={1000}
-            className="w-16 h-16 border-blue-950 border-2 rounded-full bg-slate-100 object-cover"
-          />
+          {pix ? (
+            <Image
+              src={pix}
+              alt=""
+              width={1000}
+              height={1000}
+              className="w-16 h-16 border-blue-950 border-2 rounded-full bg-slate-100 object-cover"
+            />
+          ) : (
+            <div className="w-16 h-16 border-blue-950 border-2 rounded-full bg-slate-100 object-cover flex justify-center items-center text-[30px] font-bold ">
+              P
+            </div>
+          )}
           <div>
             <p className="text-[14px] font-semibold ">Name</p>
             <p className="text-[12px]">No of Staff: 3</p>
