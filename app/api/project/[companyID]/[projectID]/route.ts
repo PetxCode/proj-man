@@ -6,12 +6,12 @@ import taskData from "@/utils/model/taskModel";
 
 export const GET = async (req: NextRequest, { params }: any) => {
   try {
-    const { taskID } = params;
+    const { projectID } = params;
 
     await dbConfig();
 
-    const task = await taskData.findById(taskID).populate({
-      path: "step",
+    const project = await projectData.findById(projectID).populate({
+      path: "task",
       options: {
         sort: {
           createAt: -1,
@@ -19,8 +19,8 @@ export const GET = async (req: NextRequest, { params }: any) => {
       },
     });
     return NextResponse.json({
-      message: "Getting company's project task steps",
-      data: task,
+      message: "Getting company's project task",
+      data: project,
       status: 201,
     });
   } catch (error: any) {

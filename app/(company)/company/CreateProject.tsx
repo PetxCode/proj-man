@@ -1,7 +1,7 @@
 "use client";
 
 import moment from "moment";
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { MdCloseFullscreen } from "react-icons/md";
 import DatePicker from "react-datepicker";
 
@@ -10,11 +10,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
 import { redirect, useRouter } from "next/navigation";
+import { ContextProvider } from "@/app/global/GlobalContext";
 
 interface iTog {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const CreateProject: FC<iTog> = ({ setToggle }) => {
+  const { setStaffToggle, staffToggle }: any = useContext(ContextProvider);
   const session: any = useSession();
   const route = useRouter();
 
@@ -40,6 +42,25 @@ const CreateProject: FC<iTog> = ({ setToggle }) => {
     revalidateTag("project");
   };
 
+  const staffAction = async (formData: FormData) => {
+    const staffName = formData.get("title");
+
+    console.log(staffName);
+
+    await fetch(`/api/register/${session?.data?.user?.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ staffName }),
+    }).then(() => {
+      setToggle(false);
+      redirect("/company/inbox");
+    });
+
+    revalidateTag("project");
+  };
+
   return (
     <div
       className="w-[100vw] backdrop-blur-sm h-screen flex items-center justify-center flex-col"
@@ -52,12 +73,18 @@ const CreateProject: FC<iTog> = ({ setToggle }) => {
       <div className="w-[400px] border rounded-md min-h-[200px] border-black p-4 ">
         <div className=" flex justify-between items-center ">
           <p className="text-[18px] font-semibold mb-5 ">
-            Creating a New Project
+            {staffToggle ? (
+              <p>Creating a New Staff</p>
+            ) : (
+              <p>Creating a New Project</p>
+            )}
           </p>
           <div
             className="cursor-pointer p-2 mb-4 bg-red-500 text-white rounded-full border"
             onClick={() => {
-              setToggle(false);
+              {
+                staffToggle ? setStaffToggle(false) : setToggle(false);
+              }
             }}
           >
             <MdCloseFullscreen />
@@ -67,9 +94,14 @@ const CreateProject: FC<iTog> = ({ setToggle }) => {
           <hr />
         </div>
 
-        <form action={mainAction} className="w-full">
+        <form
+          action={staffToggle ? staffAction : mainAction}
+          className="w-full"
+        >
           <div className="flex flex-col mb-3">
-            <label className="text-[12px] font-semibold">Project Title</label>
+            <label className="text-[12px] font-semibold">
+              {staffToggle ? "Staff Name" : "Project Title"}
+            </label>
             <input
               type="text"
               name="title"
@@ -77,16 +109,18 @@ const CreateProject: FC<iTog> = ({ setToggle }) => {
               className="px-2 bg-transparent border-black border rounded-md h-[45px]  "
             />
           </div>
-          <div>
-            <label className="text-[12px] font-semibold">
-              Project Due Date
-            </label>
-            <DatePicker
-              selected={startDate}
-              onChange={(date: any) => setStartDate(date)}
-              className="px-2 bg-transparent border-black border rounded-md h-[45px] w-[367px]"
-            />
-          </div>
+          {!staffToggle ? (
+            <div>
+              <label className="text-[12px] font-semibold">
+                Project Due Date
+              </label>
+              <DatePicker
+                selected={startDate}
+                onChange={(date: any) => setStartDate(date)}
+                className="px-2 bg-transparent border-black border rounded-md h-[45px] w-[367px]"
+              />
+            </div>
+          ) : null}
 
           <button
             className="bg-blue-950 text-white border rounded-md flex w-full justify-center items-center h-[55px] mt-6"

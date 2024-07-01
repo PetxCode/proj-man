@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   MdCheckBox,
   MdCreateNewFolder,
@@ -13,6 +13,8 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import LoadProject from "./LoadProject";
 import Link from "next/link";
+import Button from "@/app/components/Button";
+import { ContextProvider } from "@/app/global/GlobalContext";
 
 const Sider = () => {
   const bullet = [
@@ -46,6 +48,8 @@ const Sider = () => {
 
   const [state, setState] = useState<any>({});
 
+  const { setStaffToggle, staffToggle }: any = useContext(ContextProvider);
+
   const fetchData = async () => {
     return await fetch(`/api/register/667c2ca154e4e69facc7a170`)
       .then((res) => {
@@ -63,7 +67,7 @@ const Sider = () => {
 
   return (
     <div className="relative">
-      <div className="w-[250px] flex flex-col border-r h-screen bg-slate-50 px-4 pt-10">
+      <div className="w-[250px] flex flex-col border-r h-screen bg-slate-50 px-4 pt-8">
         <div className="mb-10 flex gap-3 ">
           {pix ? (
             <Image
@@ -84,6 +88,15 @@ const Sider = () => {
             <p className="text-[12px] mt-3">
               Project Plan: <span className="font-bold ">{state?.plan}</span>
             </p>
+
+            <Button
+              className="text-[10px] mt-1 "
+              onClick={() => {
+                setStaffToggle(true);
+              }}
+            >
+              Add New Staff
+            </Button>
           </div>
         </div>
         <div className="mt-5 flex flex-col gap-4">
@@ -127,6 +140,7 @@ const Sider = () => {
       </div>
       <div className="absolute top-0 left-0">
         {toggle && <CreateProject setToggle={setToggle} />}
+        {staffToggle && <CreateProject setToggle={setToggle} />}
       </div>
     </div>
   );
