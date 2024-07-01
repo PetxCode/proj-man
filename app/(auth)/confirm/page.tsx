@@ -21,7 +21,7 @@ const page = async () => {
     console.log(res);
   });
 
-  const signInUser = (data: FormData) => {
+  const signInUser = async (data: FormData) => {
     "use server";
     const email = data.get("email");
     const password = data.get("password");
