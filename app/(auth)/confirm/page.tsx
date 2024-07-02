@@ -1,12 +1,13 @@
-// "use client";
+"use client";
 
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 import { verifyPayment } from "../register/[reg]/action";
+import { ContextProvider } from "@/app/global/GlobalContext";
 
 const page = async () => {
   // to9k0wstx6
@@ -17,12 +18,17 @@ const page = async () => {
 
   //   console.log(dataValue);
 
-  await verifyPayment("to9k0wstx6").then((res: any) => {
-    console.log(res);
-  });
+  const { planCost, companyName, plan, password, email, reference }: any =
+    useContext(ContextProvider);
+
+  //   await verifyPayment("to9k0wstx6").then((res: any) => {
+  //     // console.log(res);
+  //   });
+
+  console.log(planCost, companyName, plan, password, email, reference);
 
   const signInUser = async (data: FormData) => {
-    "use server";
+    // "use server";
     const email = data.get("email");
     const password = data.get("password");
   };

@@ -5,6 +5,9 @@ import { NextFont } from "next/dist/compiled/@next/font";
 import { dbConfig } from "@/utils/dbConfig";
 import MainSession from "./components/MainSession";
 import { GlobalContext } from "./global/GlobalContext";
+import { Provider } from "react-redux";
+import { store } from "./global/store";
+import StoreProvider from "./global/StoreProvider";
 
 const inter: NextFont = Inter({ subsets: ["latin"] });
 const poppins: NextFont = Poppins({
@@ -25,14 +28,16 @@ export default async function RootLayout({
 }>) {
   await dbConfig();
   return (
-    <GlobalContext>
-      <html lang="en">
-        <body className={poppins.className}>
-          <div className={poppins.className}>
-            <MainSession>{children}</MainSession>
-          </div>
-        </body>
-      </html>
-    </GlobalContext>
+    <StoreProvider>
+      <GlobalContext>
+        <html lang="en">
+          <body className={poppins.className}>
+            <div className={poppins.className}>
+              <MainSession>{children}</MainSession>
+            </div>
+          </body>
+        </html>
+      </GlobalContext>
+    </StoreProvider>
   );
 }

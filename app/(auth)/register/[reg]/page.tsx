@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import { data } from "@/utils/data";
 import Link from "next/link";
 import React, { useContext } from "react";
@@ -8,22 +8,23 @@ import { makePayment } from "./action";
 import { redirect } from "next/navigation";
 import { ContextProvider } from "@/app/global/GlobalContext";
 
-const page = async ({ params }: any) => {
-  // const {
-  //   setStaffToggle,
-  //   planCost,
-  //   setPlanCost,
-  //   companyName,
-  //   setCompanyName,
-  //   plan,
-  //   setPlan,
-  //   password,
-  //   setPassword,
-  //   email,
-  //   setEmail,
-  //   reference,
-  //   setReference,
-  // }: any = useContext(ContextProvider);
+const page = ({ params }: any) => {
+  const {
+    setPlanCost,
+    setCompanyName,
+    setPlan,
+    setPassword,
+    setEmail,
+    setReference,
+
+    reference,
+    companyName,
+    password,
+    email,
+    plan,
+    planCost,
+  }: any = useContext(ContextProvider);
+
   const { reg } = params;
   const readData = data;
 
@@ -36,18 +37,41 @@ const page = async ({ params }: any) => {
   let cost: any = readData.find((el) => {
     return el.name === planValue;
   });
+  console.log(cost);
+
+  setPlan(planValue);
+  setPlanCost(parseInt(cost?.price));
+
+  console.log("show this ref: ", reference);
 
   const createAccount = async (data: FormData) => {
-    "use server";
+    // "use server";
     const companyName = data.get("companyName") as string;
     const email = data.get("email") as string;
     const password = data.get("password") as string;
 
-    await makePayment(email, cost?.price).then((res: any) => {
-      console.log(res);
+    await makePayment(email, cost?.price)
+      .then((res: any) => {
+        console.log("reading: ");
+        console.log(res?.data?.data?.reference);
+        console.log(res?.data?.data);
+        setReference(res?.data?.data?.reference);
+        setEmail(email);
+        setPassword(password);
+        setCompanyName(companyName);
 
-      redirect(res?.data?.data?.authorization_url);
-    });
+        setPlan(planValue);
+        setPlanCost(parseInt(cost?.price));
+        // redirect(res?.data?.data?.authorization_url);
+      })
+      .finally(() => {
+        console.log("ref: ", reference);
+        console.log("email: ", email);
+        console.log("planCost: ", planCost);
+        console.log("password: ", password);
+        console.log("companyName: ", companyName);
+        console.log("planValue: ", plan);
+      });
 
     // await fetch(`${URL}/api/register`, {
     //   method: "POST",
